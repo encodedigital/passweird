@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passweird - Encrypt your sensitive data</title>
+
+    <meta name="description" content="Encrypt your passwords yourself. Free alternative to 1Password and other password managers.">
+    <meta name="keywords" content="Password Manager, Encrypt password, ">
+    <meta name="author" content="Jivtesh Ghatora - encodeDigital">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.8/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.8/vfs_fonts.min.js"></script>
+    
+</head>
+<body>
+    <h1 class="text-center text-5xl font-bold mt-10 mb-3 text-slate-700">Passweird</h1>
+    <main class="py-10 px-5 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div class="flex flex-col items-center py-10 px-5 md:px-10 border">
+            <h1 class="text-center text-3xl text-green-800 mb-5">Encrypt</h1>
+            
+            <div id="error_encrypt" style="display:none;" class="w-full py-3 pl-7 pr-2 my-2 bg-orange-100 border-l-4 border-red-500 text-red-700" role="alert">               
+                <p class="text-sm">All fields marked with * are mandatory. Please fill to proceed.</p>
+            </div>
+           
+            <label class="text-left w-full font-medium mb-2">Your password<span class="text-red-500 text-xl">*</span></label>
+            <input type="password" name="password" id="password" required class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+            <div class="w-full">
+                <div class="flex w-full justify-between mt-5">
+                    <label class="text-left w-full font-medium mb-2">Your Secure Key (Optional)</label>
+                    <button id="btnGenerateKey" class="text-blue-800 inline-block whitespace-nowrap font-bold">Generate new Key</button>                
+                </div>
+                <input type="text" name="key" id="key" required class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900 rounded block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
+            </div>
+
+            <label class="text-left w-full font-medium mt-5 mb-2">Data you want to Encrypt<span class="text-red-500 text-xl">*</span></label>
+            <input type="text" name="to_encrypt" id="to_encrypt" required class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+            <button id="btnEncrypt" class="text-white text-xl bg-teal-700 hover:bg-teal-800 px-5 py-2 my-10 inline-block whitespace-nowrap">Encrypt</button>
+
+            <label class="text-center w-full font-medium mb-2 text-xl">Your Encrypted Data:</label>
+            <input type="text" name="encrypted_data" id="encrypted_data" readonly class="w-full p-2.5 ml-2 mb-4 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900  rounded block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+        </div>
+        <div class="flex flex-col items-center py-10 px-5 md:px-10 border">
+            <h1 class="text-center text-3xl text-purple-800 mb-5">Decrypt</h1>
+            
+            <div id="error_decrypt" style="display:none;" class="w-full py-3 pl-7 pr-2 my-2 bg-orange-100 border-l-4 border-red-500 text-red-700" role="alert">               
+                <p class="text-sm">All fields marked with * are mandatory. Please fill to proceed.</p>
+            </div>
+            
+            <label class="text-left w-full font-medium mb-2">Your password<span class="text-red-500 text-xl">*</span></label>
+            <input type="password" name="decrypt_password" id="decrypt_password" class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+            <div class="w-full mt-5">
+                <label class="text-left w-full font-medium mb-2">Your Secure Key (Optional)</label>
+                <input type="text" name="decrypt_key" id="decrypt_key" class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
+            </div>
+            
+
+            <label class="text-left w-full font-medium mt-5 mb-2">Data you want to Decrypt<span class="text-red-500 text-xl">*</span></label>
+            <input type="text" name="to_decrypt" id="to_decrypt" class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+            <button id="btnDecrypt" class="text-white text-xl bg-purple-700 hover:bg-purple-800 px-5 py-2 my-10 inline-block whitespace-nowrap">Decrypt</button>
+
+            <label class="text-center w-full font-medium mb-2 text-xl">Your Decrypted Data:</label>
+            <input type="text" name="decrypted_data" id="decrypted_data" readonly class="w-full p-2.5 ml-2 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900  rounded block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+        </div>
+    </main>
+<script>
+// Function to generate a random 256-bit key
+async function generateKey() {
+  const key = await window.crypto.subtle.generateKey(
+    {
+      name: "AES-GCM",
+      length: 256
+    },
+    true,
+    ["encrypt", "decrypt"]
+  );
+  return key;
+}
+
+// Function to encrypt data using AES-GCM and return Base64-encoded string
+async function encryptData(key, data) {
+  const encodedData = new TextEncoder().encode(data);
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  const encryptedData = await window.crypto.subtle.encrypt(
+    {
+      name: "AES-GCM",
+      iv: iv
+    },
+    key,
+    encodedData
+  );
+
+  // Combine IV and encrypted data
+  const result = new Uint8Array(iv.length + new Uint8Array(encryptedData).length);
+  result.set(iv, 0);
+  result.set(new Uint8Array(encryptedData), iv.length);
+
+  // Convert to Base64
+  return btoa(String.fromCharCode.apply(null, result));
+}
+
+// Function to decrypt Base64-encoded data using AES-GCM
+async function decryptData(key, encryptedDataBase64) {
+  // Convert from Base64
+  const encryptedData = new Uint8Array(atob(encryptedDataBase64).split("").map(char => char.charCodeAt(0)));
+
+  const iv = encryptedData.slice(0, 12);
+  const dataToDecrypt = encryptedData.slice(12);
+
+  const decryptedData = await window.crypto.subtle.decrypt(
+    {
+      name: "AES-GCM",
+      iv: iv
+    },
+    key,
+    dataToDecrypt
+  );
+
+  return new TextDecoder().decode(decryptedData);
+}
+
+
+// Function to derive a key from a password using PBKDF2
+async function deriveKeyFromPassword(password, salt) {
+  const encoder = new TextEncoder();
+  const keyMaterial = await window.crypto.subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits", "deriveKey"]
+  );
+
+  const derivedKey = await window.crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+
+  return derivedKey;
+}
+
+// Get a reference to the button element
+const btnGenerateKey = document.getElementById('btnGenerateKey');
+const btnEncrypt = document.getElementById('btnEncrypt');
+const btnDecrypt = document.getElementById('btnDecrypt');
+
+//reference to input fields
+const inputKey = document.getElementById('key');
+const inputPassword = document.getElementById('password');
+const inputToEncrypt = document.getElementById('to_encrypt');
+const inputEncryptedData = document.getElementById('encrypted_data');
+
+const inputDecryptKey = document.getElementById('decrypt_key');
+const inputDecryptPassword = document.getElementById('decrypt_password');
+const inputToDecrypt = document.getElementById('to_decrypt');
+const inputDecryptedData = document.getElementById('decrypted_data');
+
+//errors div
+const error_encrypt = document.getElementById('error_encrypt');
+const error_decrypt = document.getElementById('error_decrypt');
+
+
+// Define a function to be executed when the button is clicked
+function handleGenerateKey() {
+    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+    // Convert to Base64
+    const key = btoa(String.fromCharCode.apply(null, salt));
+    inputKey.value = key;
+
+    generatePDF(key);
+}
+
+async function handleEncryption()
+{
+    error_encrypt.style.display = 'none';
+
+    const password = inputPassword.value;
+    const dataToEncrypt = inputToEncrypt.value; 
+    const secretkey = inputKey.value;
+    // if(!secretkey)
+    // {
+    //     const secretkey 
+    // }  
+    const salt = new Uint8Array(atob(inputKey.value).split("").map(char => char.charCodeAt(0))); 
+
+    if(!password || !dataToEncrypt)
+    {
+        error_encrypt.style.display = 'block';
+        return;
+    }
+    
+    console.log(dataToEncrypt);
+    console.log(inputKey.value);
+
+    const eKey = await deriveKeyFromPassword(password, salt);
+
+    inputEncryptedData.value = await encryptData(eKey, dataToEncrypt);
+   
+    
+}
+
+async function handleDecryption()
+{
+    try
+    {
+        error_decrypt.style.display = 'none';
+        
+        const password = inputDecryptPassword.value;
+        const dataToDecrypt = inputToDecrypt.value;   
+        const salt = new Uint8Array(atob(inputDecryptKey.value).split("").map(char => char.charCodeAt(0)));  
+
+        if(!password || !dataToDecrypt)
+        {
+            error_decrypt.style.display = 'block';
+            return;
+        }
+
+        const eKey = await deriveKeyFromPassword(password, salt);
+
+        inputDecryptedData.value = await decryptData(eKey, dataToDecrypt);
+    }
+    catch
+    {
+        inputDecryptedData.value = "Decryption failed. Credentials provided doesn't match."
+    }
+   
+}
+
+//Create PDF for new secret key generated
+function generatePDF(key) {
+
+    // Create a PDF document definition
+    const docDefinition = {
+        pageSize: 'A4',
+        pageOrientation: 'landscape',
+        content: [
+            {text: `Passweird`, style: 'topheader'},
+            {text: `https://encodedigital.github.io/passweird`, style: 'footer', link: 'https://encodedigital.github.io/passweird'},
+            {text: `Secret Key:`, style: 'header'},
+            {text: `${key}`, style: 'key'},
+            {text: `Keep this key somewhere safe. If you used this key to encrypt your data then you will need this key to decrypt it.`, margin: [ 0, 10, 0, 0 ] },
+            {text: `Subscribe us on Youtube - @encodedigital`, style: 'footer2', margin: [ 0, 330, 0, 5 ] }
+        ],
+        styles: {
+            topheader: {
+                fontSize: 26,
+                bold: true,
+                alignment: 'center',
+                lineHeight: 1.3
+            },
+            header: {
+                fontSize: 16,
+                bold: true,
+                italics: true,
+                lineHeight: 1.5
+            },
+            key: {
+                fontSize: 22,
+                bold: true,
+                color: 'purple'
+            },
+            footer: {
+              fontSize: 10,
+              alignment: 'center',
+              color: 'blue',
+              lineHeight: 3
+            },
+            footer2: {
+              fontSize: 10,
+              alignment: 'center',
+              color: 'gray'
+            }
+        }
+    };
+
+    // Generate the PDF
+    pdfMake.createPdf(docDefinition).download('secure_key.pdf');
+}
+
+// Add a click event listener to the button
+btnGenerateKey.addEventListener('click', handleGenerateKey);
+btnEncrypt.addEventListener('click', handleEncryption);
+btnDecrypt.addEventListener('click', handleDecryption);
+
+</script>
+</body>
+</html>
