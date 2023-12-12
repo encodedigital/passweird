@@ -1,6 +1,6 @@
 # Passweird
 
-Introducing **Passweird**, a cutting-edge encryption and decryption tool designed for seamless data protection. Say goodbye to forgotten passwords and security concerns.\
+Introducing **Passweird**, a cutting-edge encryption (using AES-GCM) and decryption tool designed for seamless data protection. Say goodbye to forgotten passwords and security concerns.\
 Passweird empowers users to encrypt sensitive data effortlessly, ensuring it remains secure until needed. With a user-friendly interface, Passweird guarantees hassle-free encryption, allowing you to retrieve your information whenever necessary. Bid farewell to password anxiety and embrace the simplicity of Passweird for a secure and worry-free digital experience. Encrypt with confidence, decrypt with ease – your data, your control.\
 *Same password but after encryption just looks weird - that's why **Passweird***.
 
