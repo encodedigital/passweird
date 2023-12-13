@@ -25,7 +25,10 @@
             </div>
            
             <label class="text-left w-full font-medium mb-2">Your Encryption password<span class="text-red-500 text-xl">*</span></label>
-            <input type="password" name="password" id="password" required class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block">
+			<div class="w-full flex">
+				<input type="password" name="password" id="password" required class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-600 focus:border-blue-600 block">
+				<button id="toggleBtn" class="p-2.5 border border-gray-300 text-gray-900 bg-gray-50 text-sm">Show</button>
+			</div>
             <span class="text-sm italic text-left block text-slate-500 w-full">This is the only one password you need to remember. </span>
 
             <div class="w-full">
@@ -33,41 +36,44 @@
                     <label class="text-left w-full font-medium mb-2">Your Secure Key (Optional)</label>
                     <button id="btnGenerateKey" class="text-blue-800 inline-block whitespace-nowrap font-bold">Generate new Key</button>                
                 </div>
-                <input type="text" name="key" id="key" required class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded block">
+                <input type="text" name="key" id="key" required class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 block">
                 <span class="text-sm italic text-left block text-slate-500 w-full">Make encryption more secure. Use generate key button for a secure key (with PDF) and keep it safe.</span>
             </div>
 
             <label class="text-left w-full font-medium mt-5 mb-2">Data you want to Encrypt<span class="text-red-500 text-xl">*</span></label>
-            <input type="text" name="to_encrypt" id="to_encrypt" required class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block">
+            <input type="text" name="to_encrypt" id="to_encrypt" required class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900  focus:ring-blue-600 focus:border-blue-600 block">
 
             <button id="btnEncrypt" class="text-white text-xl bg-teal-700 hover:bg-teal-800 px-5 py-2 my-10 inline-block whitespace-nowrap">Encrypt</button>
 
             <label class="text-center w-full font-medium mb-2 text-xl">Your Encrypted Data:</label>
-            <input type="text" name="encrypted_data" id="encrypted_data" readonly class="w-full p-2.5 ml-2 mb-4 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900  rounded block">
+            <input type="text" name="encrypted_data" id="encrypted_data" readonly class="w-full p-2.5 mb-4 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900 block">
         </div>
         <div class="flex flex-col items-center py-10 px-5 md:px-10 border">
             <h1 class="text-center text-3xl text-purple-800 mb-5">Decrypt</h1>
             
             <div id="error_decrypt" style="display:none;" class="w-full py-3 pl-7 pr-2 my-2 bg-orange-100 border-l-4 border-red-500 text-red-700" role="alert">               
-                <p class="text-sm">All fields marked with * are mandatory. Please fill to proceed.</p>
+                <p class="text-sm">All fields marked with * are mandatory. Please fill to proceed.</p>				
             </div>
             
             <label class="text-left w-full font-medium mb-2">Your Encryption password<span class="text-red-500 text-xl">*</span></label>
-            <input type="password" name="decrypt_password" id="decrypt_password" class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block">
+			<div class="w-full flex">
+				<input type="password" name="decrypt_password" id="decrypt_password" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900  focus:ring-blue-600 focus:border-blue-600 block">
+				<button id="toggleDecryptBtn" class="p-2.5 border border-gray-300 text-gray-900 bg-gray-50 text-sm">Show</button>
+			</div>
 
             <div class="w-full mt-5">
                 <label class="text-left w-full font-medium mb-2">Your Secure Key (Optional)</label>
-                <input type="text" name="decrypt_key" id="decrypt_key" class="w-full p-2.5 mt-2  bg-gray-50 border border-gray-300 text-gray-900 rounded block">
+                <input type="text" name="decrypt_key" id="decrypt_key" class="w-full p-2.5 mt-2  bg-gray-50 border border-gray-300 text-gray-900 block">
             </div>
             
 
             <label class="text-left w-full font-medium mt-5 mb-2">Data you want to Decrypt<span class="text-red-500 text-xl">*</span></label>
-            <input type="text" name="to_decrypt" id="to_decrypt" class="w-full p-2.5 ml-2 bg-gray-50 border border-gray-300 text-gray-900  rounded focus:ring-blue-600 focus:border-blue-600 block">
+            <input type="text" name="to_decrypt" id="to_decrypt" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-600 focus:border-blue-600 block">
 
             <button id="btnDecrypt" class="text-white text-xl bg-purple-700 hover:bg-purple-800 px-5 py-2 my-10 inline-block whitespace-nowrap">Decrypt</button>
 
             <label class="text-center w-full font-medium mb-2 text-xl">Your Decrypted Data:</label>
-            <input type="text" name="decrypted_data" id="decrypted_data" readonly class="w-full p-2.5 ml-2 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900  rounded block">
+            <input type="text" name="decrypted_data" id="decrypted_data" readonly class="w-full p-2.5 bg-gray-50 focus:outline-none border border-gray-300 text-gray-900 block">
         </div>
     </main>
 <script>
@@ -296,6 +302,33 @@ function generatePDF(key) {
 btnGenerateKey.addEventListener('click', handleGenerateKey);
 btnEncrypt.addEventListener('click', handleEncryption);
 btnDecrypt.addEventListener('click', handleDecryption);
+
+//Functionality added for toggle show/hide
+document.addEventListener('DOMContentLoaded', function() {
+      var passwordInput = document.getElementById('password');
+      var toggleButton = document.getElementById('toggleBtn');
+
+      var decryptPasswordInput = document.getElementById('decrypt_password');
+      var toggleDecryptButton = document.getElementById('toggleDecryptBtn');
+
+      toggleButton.addEventListener('click', function() {
+        togglePasswordVisibility(passwordInput, toggleButton);
+      });
+
+      toggleDecryptButton.addEventListener('click', function() {
+        togglePasswordVisibility(decryptPasswordInput, toggleDecryptButton);
+      });
+
+      function togglePasswordVisibility(inputField, button) {
+        if (inputField.type === 'password') {
+          inputField.type = 'text';
+          button.textContent = 'Hide';
+        } else {
+          inputField.type = 'password';
+          button.textContent = 'Show';
+        }
+      }
+    });
 
 </script>
 </body>
